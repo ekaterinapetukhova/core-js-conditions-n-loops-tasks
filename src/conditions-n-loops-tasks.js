@@ -349,13 +349,21 @@ function getBalanceIndex(arr) {
  *        ]
  */
 function getSpiralMatrix(size) {
-  const matrix = Array.from({ length: size }, (item) => Array(size));
+  const matrix = [];
   let top = 0;
   let left = 0;
   let right = size - 1;
   let bottom = size - 1;
   let digit = 1;
   let direction = 'r';
+
+  for (let i = 0; i < size; i += 1) {
+    const arr = [];
+    for (let j = 0; j < size; j += 1) {
+      arr[j] = 0;
+    }
+    matrix[i] = arr;
+  }
 
   while (left <= right && top <= bottom) {
     if (direction === 'r') {
@@ -413,8 +421,33 @@ function getSpiralMatrix(size) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const copyMatrix = matrix;
+  const size = matrix.length;
+  const auxMatrix = [];
+
+  for (let i = 0; i < size; i += 1) {
+    const arr = [];
+    for (let j = 0; j < size; j += 1) {
+      arr[j] = 0;
+    }
+    auxMatrix[i] = arr;
+  }
+
+  for (let row = 0; row < size; row += 1) {
+    for (let col = 0; col < size; col += 1) {
+      auxMatrix[size - col - 1][size - row - 1] = copyMatrix[row][col];
+    }
+  }
+
+  let j = size - 1;
+
+  for (let i = 0; i < auxMatrix.length; i += 1) {
+    copyMatrix[i] = auxMatrix[j];
+    j -= 1;
+  }
+
+  return copyMatrix;
 }
 
 /**
