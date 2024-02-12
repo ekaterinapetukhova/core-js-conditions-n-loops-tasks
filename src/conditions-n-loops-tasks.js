@@ -137,8 +137,28 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const romans = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
+  const ten = 10;
+  let dozens;
+  let units;
+  let result = '';
+
+  if (num <= ten) {
+    result += romans[num - 1];
+  } else {
+    dozens = Math.trunc(num / ten);
+    units = num - dozens * ten;
+
+    while (dozens) {
+      result += romans[ten - 1];
+      dozens -= 1;
+    }
+
+    result += romans[units - 1];
+  }
+
+  return result;
 }
 
 /**
@@ -573,6 +593,8 @@ function shuffleChar(str, iterations) {
 function getNearestBigger(number) {
   const arr = [...String(number)].map((item) => Number(item));
   const l = arr.length - 1;
+  const left = [];
+  const right = [];
   let result = '';
 
   let i = l - 1;
@@ -592,9 +614,6 @@ function getNearestBigger(number) {
   const temp = arr[i];
   arr[i] = arr[j];
   arr[j] = temp;
-
-  const left = [];
-  const right = [];
 
   for (let k = 0; k < arr.length; k += 1) {
     if (k < i + 1) {
